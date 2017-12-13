@@ -1,16 +1,19 @@
+### Welcome to the Crypto Trader program
+
 
 ### Introduction
 
 This project will help you scrape data from Coimarketcap.com, a website that provides information regarding the crypotcurrency markets.
-The code allows you to scrape information regarding the top 10 cryptocurrencies (by market capitalization) and then provides a table
-help you find the cheapest exchanges to buy these cryptocurrencies (tailored specifically for those who are in US)
+The code allows you to scrape information regarding the top 10 cryptocurrencies (by market capitalization) and then provides a table to
+help you find the cheapest exchanges to buy these cryptocurrencies (tailored specifically for those who are in US), thus performing
+market arbitrage.
 
 ### Part I - Getting Started - Downloading necessary files
-- Downloading the following files from this Github repository into the same folder on your desktop:
+- Download the following files from this Github repository into the same folder on your desktop:
   - SI507F17_finalproject.py - this is the actual program
   - SI507F17_finalproject_tests.py - this provides to test to ensure the code is running properly
   - config.py - this is information for setting up your database
-  - requirements.txt - this contains the necesssary packages used for the code. You will need to install these packages for the code to work.
+  - requirements.txt - this contains the necessary packages used for the code. You will need to install these packages for the code to work.
   - plotlyconfig.py - this makes sure that the Plotly visualizations work
 
 ### Part II - Getting Started - Running the code
@@ -20,8 +23,10 @@ help you find the cheapest exchanges to buy these cryptocurrencies (tailored spe
 - On your terminal, to run the program, type, "python3 SI507F17_finalproject.py"
 
 ### Part III - What output to expect
-- Once you run, the code, you will notice that a web browser opens as the program is scraping two pages on coinmarketcap.com
-  to get information about the top 10 crypotcurrencies and their respective exchanges.
+- Once you run the code, you will notice that a web browser opens as the program is scraping two pages on coinmarketcap.com
+  to get information about the top 10 crypotcurrencies and their respective exchanges. It will fetch a fresh copy first_row
+  and then only fetch a fresh copy every 10 minutes. Up-to-date information is important for prices so that is why the cache
+  expiry is quite short.
 - Two tabs will open. These will bring you to one Plotly chart and another Plotly table. You can see an example screenshot of both
   of these in this Githbu repository ('Crypto Chart' and 'Crypto Arbitrage Table'). If you aren't logged in you can either login or
   click "x" to simply see the chart and table.
@@ -37,3 +42,5 @@ help you find the cheapest exchanges to buy these cryptocurrencies (tailored spe
 - I received assistance from Anand Doshi, a Graduate Student Instructor at the University of Michigan, with this project.
   In particular, he helped with the usage of Selenium and Webdriver, two packages that allowed me to scrape information from
   portions of coinmarketcap.com that were coded in Javascript
+- This code also re-uses code from previous projects in UMSI's SI 507 course specifically the code to cache data and to set up
+  a PSQL database.
