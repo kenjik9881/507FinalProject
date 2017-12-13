@@ -230,12 +230,10 @@ for coin in open_list:
     coin_instance = Cryptocurrency(coin)
     coin_instances.append(coin_instance)
 
-print(coin_instances[0])
-
 # coin_instances = [Cryptocurrency(x) for x in open_list] #list comprehension of the above four lines
 
 
-print("----------------NEW RUNNING----------")
+print("----------------Now Perusing the Crytpo World----------")
 # for coin in coin_instances:
 #     print(repr(coin))
 
@@ -307,7 +305,7 @@ for each_coin in top10_coins_hyphenated: #this runs every coin from the top 10 i
     one_coin_markets = get_us_markets_for(each_coin)
     markets_for_top10.extend(one_coin_markets) #extend flattens a list by putting in another list
 
-print(json.dumps(markets_for_top10, indent=2)) #this pretty prints, dictionaries
+# print(json.dumps(markets_for_top10, indent=2)) #this pretty prints, dictionaries
 
 
 
@@ -383,7 +381,7 @@ def setup_database():
     db_cursor.execute("CREATE TABLE Exchanges(ID SERIAL PRIMARY KEY, exchange_name VARCHAR(128), name_of_coin VARCHAR(128),  exchange_price DOUBLE PRECISION)")
 
     db_connection.commit()
-    print('Setup database complete')
+    # print('Setup database complete')
 
 setup_database()
 
@@ -395,13 +393,13 @@ for coin in coin_instances:
 for exchange in exchange_instance_list:
     db_cursor.execute("""INSERT INTO Exchanges(exchange_name, name_of_coin, exchange_price) VALUES (%(exchange_name)s, %(name_of_coin)s, %(exchange_price)s)  """, exchange)
 
-print("Query the Coin tables to pull the average price of the coins on all the exchanges and order them by their rank")
+print("Getting the average price of the top 10 cryptocoins and ordering them by their rank (market cap) in ascending order")
 db_cursor.execute(""" SELECT "coins"."coin_rank", "coins"."name", "coins"."marketcap", "coins"."price" FROM "coins" ORDER BY "coins"."coin_rank" ASC """)
 average_coin_prices = db_cursor.fetchall()
 # print(json.dumps(average_coin_prices, indent=2))
 
-print("Query the two tables to pull the price of the coins on all the exchanges and order them in ascending order")
-db_cursor.execute("""SELECT "exchanges"."name_of_coin", "exchanges"."exchange_name", "exchanges"."exchange_price" FROM "exchanges" INNER JOIN "coins" ON ("exchanges"."name_of_coin") = ("coins"."name") ORDER BY "exchanges"."name_of_coin" DESC, "exchanges"."exchange_price" ASC """)
+print("Pulling the price of the top 10 coins on all exchanges serving US customers and ordering by rank and price in ascending order")
+db_cursor.execute("""SELECT "exchanges"."name_of_coin", "exchanges"."exchange_name", "exchanges"."exchange_price" FROM "exchanges" INNER JOIN "coins" ON ("exchanges"."name_of_coin") = ("coins"."name") ORDER BY "coins"."coin_rank" ASC, "exchanges"."name_of_coin" DESC, "exchanges"."exchange_price" ASC """)
 market_prices = db_cursor.fetchall()
 # print(json.dumps(market_prices, indent=2))
 
@@ -453,12 +451,20 @@ for price in exchange_values:
 # print(exchange_prices)
 
 trace = go.Table(
-    header=dict(values=['Name of Coin', 'Exchange', 'Exchange Price']),
-    cells=dict(values=[exchange_coin_names,
-                       exchange_names, exchange_prices]))
+    header=dict(values=['Name of Coin', 'Exchange', 'Exchange Price'],
+                line = dict(color='#7D7F80'),
+                fill = dict(color='#009688'),
+                align = ['center'] * 5),
+    cells=dict(values=[exchange_coin_names, exchange_names, exchange_prices],
+               line = dict(color='#7D7F80'),
+               fill = dict(color='#E0F2F1'),
+               align = ['center'] * 5))
 
+layout = dict(width=1024, height=768)
 data = [trace]
-py.plot(data, filename = 'basic_table')
+fig = dict(data=data, layout=layout)
+py.plot(fig, filename = 'styled_table')
+
 
 if chrome_browser:
     chrome_browser.close()
