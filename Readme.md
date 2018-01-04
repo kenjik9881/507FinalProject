@@ -3,7 +3,7 @@
 
 ### Introduction
 
-This project will help you scrape data from Coimarketcap.com, a website that provides information regarding the crypotcurrency markets.
+This project will help you scrape data from Coinmarketcap.com, a website that provides information regarding the crypotcurrency markets.
 The code allows you to scrape information regarding the top 10 cryptocurrencies (by market capitalization) and then provides a table to
 help you find the cheapest exchanges to buy these cryptocurrencies (tailored specifically for those who are in US), thus performing
 market arbitrage.
